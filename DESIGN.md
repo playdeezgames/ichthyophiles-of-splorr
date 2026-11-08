@@ -47,7 +47,7 @@ The state of a living fish is two hidden amounts, in days, plus timestamps:
 - **food**: what is in the tank. Each Feed adds 1. While food is above 0 it is eaten at 1 per real day.
 - **hunger**: how starved it is. While food is 0, hunger grows at 1 per real day. While food is above 0, hunger falls at 1 per real day, down to 0.
 - **Starvation:** hunger reaching 5 kills the fish, at the exact moment it reaches 5.
-- **Overfeeding:** a Feed that brings food to 5 or more dooms the fish; it dies exactly one hour after that feeding. Feeding it again during that hour kills it at once.
+- **Overfeeding:** a Feed that brings food to 5 or more dooms the fish; it dies exactly one hour after that feeding. Feeding it again during that hour kills it at once. Because the food is eaten continuously, presses a few seconds apart leave slightly less than five days' worth, so the check rounds the food up to the whole minute (the smallest unit shown): five presses within a minute doom a fish with an empty tank (found while building, November 8, 2026).
 - **Condition:** `food - hunger`, a number between -5 and +5, picks the description. A doomed fish shows the "unwell" description instead.
 - **Real clock:** nothing ticks in the background. When the page opens (and every minute while it is open) the game advances the state from the saved timestamps to now, and if the fish died while the page was closed, says when and how.
 - **Stats:** fish overfed, fish starved, longest life (the best of all finished lives and the current fish's age). A life runs from Get a Fish to death.
@@ -56,6 +56,11 @@ Two consequences worth knowing (not problems; the design as decided):
 
 - While a fish has food and is still recovering hunger, food and hunger fall together, so `food - hunger` and the description hold still until the hunger is gone.
 - A new fish with an empty tank dies after five presses of Feed in a row, and starves in five days if never fed.
+- A new fish is hungry from its first second, so it looks "lean" straight away rather than "just right".
+
+## Built
+
+The MVP was built November 8, 2026 (Odin and wasm, plain DOM page; see `CLAUDE.md`).
 
 ## Wording
 

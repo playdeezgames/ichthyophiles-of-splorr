@@ -4,31 +4,44 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-**Ichthyophiles of SPLORR!!**, the game the user first called "Feed the Fish": a virtual pet in which you keep a single fish alive on the real clock, neither overfed nor starved. The metaphor, in the user's words, is "quite literally that people are bad at taking care of things." By TheGrumpyGameDev, started November 8, 2026. Odin compiled to `js_wasm32`, text and buttons.
+**Ichthyophiles of SPLORR!!**, the game the user first called "Feed the Fish": a virtual pet in which you keep a single fish alive on the real clock, neither overfed nor starved. The metaphor, in the user's words, is "quite literally that people are bad at taking care of things." By TheGrumpyGameDev, started November 8, 2026. Odin compiled to `js_wasm32`, a plain DOM page of text and buttons (no canvas).
 
-**It is in the planning stage: the gameplay is being worked out with the user first, and there is no code, build or test step yet.** `DESIGN.md` holds the decisions (in the user's words, dated), a working reading of the rules awaiting the user's confirmation, and the open questions. Do not scaffold code or invent mechanics ahead of the user; only the user moves an item from Open to Decided.
+`DESIGN.md` is the specification: the user's decisions (dated, in their words), the rules worked out from them, and all the wording, every line approved by the user. Do not change wording or rules without the user; only the user moves an item from Open to Decided. The MVP was built November 8, 2026; the Tamagotchi picture and LootLocker scores come after it, details to be settled with the user then.
 
-The vault at `/home/yermom/git/bok-of-splorr/splorr/` is the shared body of knowledge for all SPLORR!! games and holds the standing rules. Read its `Home.md` first. This game's note is `Games/Ichthyophiles of SPLORR!!.md`; it links to the earlier idea note (`Concepts/Feed the Fish.md`) and the Fifty Games list (`Concepts/Fifty Games.md`). When a design decision or a fact about the game changes, update that note and its `Home.md` row as well.
+The vault at `/home/yermom/git/bok-of-splorr/splorr/` is the shared body of knowledge for all SPLORR!! games and holds the standing rules. Read its `Home.md` first. This game's note is `Games/Ichthyophiles of SPLORR!!.md` (it links to `Concepts/Feed the Fish.md` and `Concepts/Fifty Games.md`). When a decision or a fact about the game changes, update that note and its `Home.md` row as well.
 
-## Where it comes from
+## Commands
 
-Feed the Fish was game 02 of `playdeezgames/fifty-games` ("In which I make fifty games. In fifty weeks."; VB.NET console games on Spectre.Console), and its "Fifty Games.pdf" idea list files it under Simulation Games. The old version (`src/FeedTheFish/FeedTheFish.vb` there) runs on the real clock:
+```bash
+tools/test.sh            # native tests (odin test, one thread) and then the real wasm build
+tools/build.sh [--size]  # wasm build into build/web (--size for shipping)
+tools/serve.sh           # build and serve on http://localhost:${PORT:-8000}/
+tools/pages.sh           # tests, size build, copy into docs/ for GitHub Pages; never commits or pushes
+```
 
-- You start with no fish; you can get a fish; with a fish, you can feed it.
-- Getting a fish sets "fed until" to now plus one day; each feeding adds one more day.
-- If "fed until" passes, the fish has starved; if a feeding pushes it more than seven days ahead, you overfed it and it dies.
-- With a dead fish you can get a new one. Fish starved and fish overfed are counted.
+One test: `odin test odin -define:ODIN_TEST_THREADS=1 -define:ODIN_TEST_NAMES=fish.<test_name>`. Always run the wasm build too (`tools/test.sh` does): `int` is 32 bits on `js_wasm32`, so times are `i64` milliseconds throughout.
 
-The new game differs (decided November 8, 2026): the overfeed and starvation limits are five days each, and the player never sees the amount of food, only a description of how fat or skinny the fish is. `DESIGN.md` is the specification, not the old code.
+## Architecture (package `fish` in `odin/`)
 
-## Planned release
+- `rules.odin`: the pure game. The clock is always an argument (`now`, ms since the epoch); nothing ticks. A living fish is `food_ms` and `hunger_ms` as of `updated_ms`; `advance(g, now)` replays the time since (food eaten and hunger wearing off together while there is food, hunger building while the tank is empty) and kills the fish at the exact moment it starves or its doomed hour ends, so a fish can die while the page is closed. `feed` dooms the fish when the food reaches five days (rounded up to the minute, because eating is continuous) and kills a doomed fish at once.
+- `text.odin`: the approved wording (descriptions by food minus hunger, death messages, names, How to Play, reset text) and duration formatting.
+- `screens.odin`: the view model. `make_view` lists elements (`Elem_Kind`: title, text, name, stat, button, text box) for the current `Screen`; `click(action)` and `submit_name(text)` run the buttons. Strings are in the temp allocator.
+- `save.odin`: a versioned JSON save of `Game`, every field range-checked; a bad save is ignored.
+- `web.odin` (`#+build js`): imports `now_ms`, `dom_clear/dom_add/dom_end`, `read_text`, `storage_get/set`; exports `on_click(action)`, `on_submit_name()`, `on_tick()`. Every event advances, saves, and redraws (`settle`).
+- `web/index.html`: renders the elements as real DOM (`textContent` only), keeps a half-typed rename across the per-minute refresh, ticks on each minute and when the tab returns, saves under the `localStorage` key `ichthyophiles-of-splorr-save` (itch.io serves every game from one origin). **Its `KIND` table and `SAVE_NAME` number must match `Elem_Kind` and `Action`**; `element_kinds_match_the_page` pins them.
+- Tests are `*_test.odin` (`#+build !js`).
 
-- **GitHub Pages first, itch.io later**, and only once the user is satisfied that it lives up to the concept. The repo is already public. Do not book a ship in Coxswain until the user asks.
-- When code exists, follow the vault's `Tech/Release standard.md` (`ITCH_DESCRIPTION.md`, `assets/cover.png` at 630 by 500, `assets/screenshots/`, `devlog/YYYYMMDD/`, `tools/ship.sh` plus the one-line `shippit.sh` wrapper that pushes only with `--push`, `tools/pages.sh` into `docs/`) and give the page the footer back links and the "Send feedback" LootLocker link (`Tech/LootLocker.md`).
-- Odin and `js_wasm32` (vault `Tech/Odin wasm recipe.md`). Online high scores for how long fish live are planned through LootLocker (vault `Tech/LootLocker.md`, Chem-Grid is the reference); when they arrive is open.
+## Release
+
+- **GitHub Pages first, itch.io later**, once the user is satisfied that it lives up to the concept. The repo is public. Do not book a ship in Coxswain until the user asks.
+- Still to add per the vault's `Tech/Release standard.md` before release: `ITCH_DESCRIPTION.md`, `assets/cover.png` (630 by 500), `assets/screenshots/`, `devlog/YYYYMMDD/`, `tools/ship.sh` plus the one-line `shippit.sh` wrapper (pushes only with `--push`), and the footer "Send feedback" link (shared LootLocker form, `Tech/LootLocker.md`; needs a LootLocker game, which is the user's to create or approve). The footer already has the back links and the AI-use line.
 
 ## Rules
 
 - Never `git push`, `shippit.sh --push`, `tools/ship.sh --push` or `butler push` unless the user says so. "Push" means `git push`; "ship" means itch.io. One itch.io release a day, booked through Coxswain (`ship_today` before any ship).
 - On itch.io and in page copy the game is a "Metaphor", never a "Game". Anything an AI agent posts on itch.io says it was posted by an AI agent.
-- Do not describe or "fix" a deliberate design choice as a problem.
+- Do not describe or "fix" a deliberate design choice as a problem (for example, a new fish arrives hungry and looks "lean" at once; while it recovers, its description holds still).
+
+## Where it comes from
+
+Game 02 of `playdeezgames/fifty-games` (a VB.NET console game): feeding added a day, seven days ahead was overfeeding, and the fed-until time passing was starvation. `DESIGN.md` supersedes it.
