@@ -9,5 +9,5 @@ rm -rf build/web
 mkdir -p build/web
 "$ODIN" build odin -target:js_wasm32 -out:build/web/game.wasm -o:$opt -vet-unused -vet-shadowing
 cp "$("$ODIN" root)/core/sys/wasm/js/odin.js" build/web/
-cp web/index.html build/web/
+cp web/index.html web/lootlocker.js build/web/
 echo "built build/web ($opt)"

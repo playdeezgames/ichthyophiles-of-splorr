@@ -25,10 +25,31 @@
 <body>
 <main id="game" aria-live="polite"></main>
 <footer>
-  Ichthyophiles of SPLORR!! by TheGrumpyGameDev. Code and words made by an AI agent (Claude Code) at the author's direction.
-  <a href="https://thegrumpygamedev.itch.io/">itch.io</a> · <a href="https://playdeezgames.github.io/oeuvre-of-splorr/">more games</a>
+  Ichthyophiles of SPLORR!! by TheGrumpyGameDev. Code and words made by an AI agent (Claude Code) at the author's direction.<span class="ll-only" hidden> Feedback by LootLocker.</span>
+  <span class="ll-only" hidden><a href="#" id="feedback-link">Send feedback</a> · </span><a href="https://thegrumpygamedev.itch.io/">itch.io</a> · <a href="https://playdeezgames.github.io/oeuvre-of-splorr/">more games</a>
 </footer>
 <script src="odin.js"></script>
+<script src="lootlocker.js"></script>
+<script>
+// Feedback (the shared SPLORR!! LootLocker shim's form, splorr/Tech/LootLocker.md in the vault): reports go
+// to the LootLocker console under Feedback, Game. The link stays hidden until LL_KEY is filled in.
+// The game has no keyboard controls, so there is no feedback key: the footer link only.
+// TODO before shipping with feedback: the LootLocker game's API domain and public Game API key (not a
+// secret), with Guest Login on, the CORS Allowlist (https://playdeezgames.github.io,
+// https://html-classic.itch.zone, http://localhost:8000) and Game feedback categories (Bug, Idea, Other).
+const LL_DOMAIN = "";
+const LL_KEY = "";
+const feedback = LL_KEY ? LootLocker({
+  domain: LL_DOMAIN,
+  key: LL_KEY,
+  version: "1.0.0",
+  idKey: "ichthyophiles:ll-player",
+}).feedbackDialog({ game: "Ichthyophiles of SPLORR!!" }) : null;
+if (feedback) {
+  document.querySelectorAll(".ll-only").forEach((el) => { el.hidden = false; });
+  document.getElementById("feedback-link").addEventListener("click", (e) => { e.preventDefault(); feedback.open(); });
+}
+</script>
 <script>
 "use strict";
 (() => {
