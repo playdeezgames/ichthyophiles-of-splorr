@@ -49,11 +49,13 @@ Two consequences worth knowing (not problems; the design as decided):
 - While a fish has food and is still recovering hunger, food and hunger fall together, so `food - hunger` and the description hold still until the hunger is gone.
 - A new fish with an empty tank dies after five presses of Feed in a row, and starves in five days if never fed.
 
-## Drafts for the user to edit
+## Wording
 
-Not decided. The user edits or replaces these.
+Drafted by Claude, reviewed one section at a time and **all approved by the user on November 8, 2026**. Keep the wording; changes are the user's.
 
 ### Descriptions (condition = food minus hunger)
+
+**Approved by the user as written, November 8, 2026** ("love it. my favorite is 'Fish have ribs'"). Keep the wording.
 
 | Condition | Draft |
 |---|---|
@@ -71,14 +73,20 @@ Not decided. The user edits or replaces these.
 
 ### Death messages
 
-- Starved: "Yer fish starved to death [time ago]."
-- Overfed: "Yer fish died of overeating [time ago]."
+User's direction (November 8, 2026): "add the fishes name" and "lay on the guilt for the playerr." **These two approved as written, November 8, 2026** ("keep them as is"; the extra random lines offered in chat were not taken). [name] is the fish's name, [time ago] e.g. "3 hours, 12 minutes ago" or "just now".
+
+- Starved: "[name] starved to death [time ago]. [name] waited by the glass for you right up to the end. You had one job."
+- Overfed: "[name] died of overeating [time ago]. [name] trusted you to know when to stop. You didn't."
 
 ### Fish names (random pick, renamable)
+
+**Approved as written, November 8, 2026** ("fine"; the user was "especially tickled by 'Wanda'").
 
 Bubbles, Finnegan, Gill Bates, Captain Wiggles, Sir Swims-a-Lot, Nemo's Cousin, Flounder, Goldie, Mr. Blub, Admiral Snack, Lil' Fin, Sushi (it does not know), Gordon, Wanda, Steve, Splashley, Bartholomew, Dorsal, Fishy McFishface, Gulp.
 
 ### How to Play
+
+**Approved as written, November 8, 2026** ("keep it"; no closing jab).
 
 You start with no fish. Get a fish. Feed the fish. Not too much: the fish dies if you overfeed it. Not too little: the fish dies if you starve it. Yer fish lives on the real clock, even when you are not looking. If yer fish dies, get a new fish.
 
