@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-The home of the game idea the user calls **"Feed the Fish"** (repo name `ichthyophiles-of-splorr`), by TheGrumpyGameDev. Started November 8, 2026. **It is in the planning stage: the gameplay is being worked out with the user first, and there is no code, build or test step yet.** Do not scaffold code, choose a stack or invent mechanics ahead of the user; record what they decide, in their words, with the date.
+**Ichthyophiles of SPLORR!!**, the game the user first called "Feed the Fish": a virtual pet in which you keep a single fish alive on the real clock, neither overfed nor starved. The metaphor, in the user's words, is "quite literally that people are bad at taking care of things." By TheGrumpyGameDev, started November 8, 2026. Odin compiled to `js_wasm32`, text and buttons.
+
+**It is in the planning stage: the gameplay is being worked out with the user first, and there is no code, build or test step yet.** `DESIGN.md` holds the decisions (in the user's words, dated), a working reading of the rules awaiting the user's confirmation, and the open questions. Do not scaffold code or invent mechanics ahead of the user; only the user moves an item from Open to Decided.
 
 The vault at `/home/yermom/git/bok-of-splorr/splorr/` is the shared body of knowledge for all SPLORR!! games and holds the standing rules. Read its `Home.md` first. This game's note is `Games/Ichthyophiles of SPLORR!!.md`; it links to the earlier idea note (`Concepts/Feed the Fish.md`) and the Fifty Games list (`Concepts/Fifty Games.md`). When a design decision or a fact about the game changes, update that note and its `Home.md` row as well.
 
@@ -17,13 +19,13 @@ Feed the Fish was game 02 of `playdeezgames/fifty-games` ("In which I make fifty
 - If "fed until" passes, the fish has starved; if a feeding pushes it more than seven days ahead, you overfed it and it dies.
 - With a dead fish you can get a new one. Fish starved and fish overfed are counted.
 
-That is the starting point, not a specification: how much of it the new game keeps is the user's call.
+The new game differs (decided November 8, 2026): the overfeed and starvation limits are five days each, and the player never sees the amount of food, only a description of how fat or skinny the fish is. `DESIGN.md` is the specification, not the old code.
 
 ## Planned release
 
 - **GitHub Pages first, itch.io later**, and only once the user is satisfied that it lives up to the concept. The repo is already public. Do not book a ship in Coxswain until the user asks.
 - When code exists, follow the vault's `Tech/Release standard.md` (`ITCH_DESCRIPTION.md`, `assets/cover.png` at 630 by 500, `assets/screenshots/`, `devlog/YYYYMMDD/`, `tools/ship.sh` plus the one-line `shippit.sh` wrapper that pushes only with `--push`, `tools/pages.sh` into `docs/`) and give the page the footer back links and the "Send feedback" LootLocker link (`Tech/LootLocker.md`).
-- Most SPLORR!! games are Odin compiled to `js_wasm32` (vault `Tech/Odin wasm recipe.md`); that is the house default, not a decision for this game until the user makes it.
+- Odin and `js_wasm32` (vault `Tech/Odin wasm recipe.md`). Online high scores for how long fish live are planned through LootLocker (vault `Tech/LootLocker.md`, Chem-Grid is the reference); when they arrive is open.
 
 ## Rules
 
