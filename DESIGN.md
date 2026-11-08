@@ -32,6 +32,14 @@ The game the user called "Feed the Fish" (game 02 of `fifty-games`). This file r
 8. **Longest living counts the living fish too:** if the current fish passes the record, the record shows it and keeps climbing. Lifespans are shown in **days, hours and minutes**.
 9. **Also on the main screen:** the fish's **age**, the **time since it was last fed**, a **name** (random, and the player can rename it), and a **How to Play** button.
 
+### November 8, 2026: the remaining small questions
+
+1. **Feeding a doomed fish kills it at once** (by overfeeding).
+2. **Renaming: both** a text box to type a name (up to **40 characters**) and a button for another random name from the list.
+3. **An open page updates the fish every minute.**
+4. **Reset, with a guilt trip:** a reset button that names how many fish the player is trying to forget before it lets them. It wipes **the stats and the fish**, back to "You have no fish!" (wording below, a draft).
+5. **The Tamagotchi picture and the LootLocker leaderboard are settled when we get there**, after the MVP.
+
 ## The rules, worked out from the decisions
 
 The state of a living fish is two hidden amounts, in days, plus timestamps:
@@ -39,9 +47,9 @@ The state of a living fish is two hidden amounts, in days, plus timestamps:
 - **food**: what is in the tank. Each Feed adds 1. While food is above 0 it is eaten at 1 per real day.
 - **hunger**: how starved it is. While food is 0, hunger grows at 1 per real day. While food is above 0, hunger falls at 1 per real day, down to 0.
 - **Starvation:** hunger reaching 5 kills the fish, at the exact moment it reaches 5.
-- **Overfeeding:** a Feed that brings food to 5 or more dooms the fish; it dies exactly one hour after that feeding.
+- **Overfeeding:** a Feed that brings food to 5 or more dooms the fish; it dies exactly one hour after that feeding. Feeding it again during that hour kills it at once.
 - **Condition:** `food - hunger`, a number between -5 and +5, picks the description. A doomed fish shows the "unwell" description instead.
-- **Real clock:** nothing ticks in the background. When the page opens (and on a timer while it is open) the game advances the state from the saved timestamps to now, and if the fish died while the page was closed, says when and how.
+- **Real clock:** nothing ticks in the background. When the page opens (and every minute while it is open) the game advances the state from the saved timestamps to now, and if the fish died while the page was closed, says when and how.
 - **Stats:** fish overfed, fish starved, longest life (the best of all finished lives and the current fish's age). A life runs from Get a Fish to death.
 
 Two consequences worth knowing (not problems; the design as decided):
@@ -90,10 +98,14 @@ Bubbles, Finnegan, Gill Bates, Captain Wiggles, Sir Swims-a-Lot, Nemo's Cousin, 
 
 You start with no fish. Get a fish. Feed the fish. Not too much: the fish dies if you overfeed it. Not too little: the fish dies if you starve it. Yer fish lives on the real clock, even when you are not looking. If yer fish dies, get a new fish.
 
+### Reset (draft, not yet approved)
+
+[N] counts every fish the player has had; the bracketed parts appear only when they apply.
+
+> You are about to forget [N] fish. [S] you starved. [O] you overfed. [And [name], who is still alive and is about to be flushed.] They would not have forgotten you. Forget them anyway?
+
+Buttons: **Forget them** / **Never mind**.
+
 ## Open
 
-- During the doomed hour, can the player still press Feed (with no effect), or is the button gone?
-- Renaming: a Rename button that asks for a name (a text box in a text-and-buttons game), and a length limit?
-- How often the open page refreshes the state (every minute fits days, hours and minutes).
-- Are the starvation and overfeed death counts and the record ever reset (a button to start over)?
-- After the MVP: the Tamagotchi picture (drawn how, and where on the page) and the LootLocker leaderboard (submit each finished life? the living record? player name or guest?).
+- After the MVP: the Tamagotchi picture (drawn how, and where on the page) and the LootLocker leaderboard (submit each finished life? the living record? player name or guest?). The user chose to settle these when we get there.
