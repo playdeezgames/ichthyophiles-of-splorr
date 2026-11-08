@@ -33,7 +33,7 @@ One test: `odin test odin -define:ODIN_TEST_THREADS=1 -define:ODIN_TEST_NAMES=fi
 
 ## Release
 
-- **GitHub Pages first, itch.io later**, once the user is satisfied that it lives up to the concept. The repo is public. Do not book a ship in Coxswain until the user asks.
+- **Live on GitHub Pages: https://playdeezgames.github.io/ichthyophiles-of-splorr/** (since November 8, 2026; Pages serves `main` `/docs`, so run `tools/pages.sh`, commit `docs/` and push, on the user's word, to update it). itch.io comes later, once the user is satisfied that it lives up to the concept. Do not book a ship in Coxswain until the user asks.
 - Still to add per the vault's `Tech/Release standard.md` before release: `ITCH_DESCRIPTION.md`, `assets/cover.png` (630 by 500), `assets/screenshots/`, `devlog/YYYYMMDD/`, `tools/ship.sh` plus the one-line `shippit.sh` wrapper (pushes only with `--push`), and the footer "Send feedback" link (shared LootLocker form, `Tech/LootLocker.md`; needs a LootLocker game, which is the user's to create or approve). The footer already has the back links and the AI-use line.
 
 ## Rules
