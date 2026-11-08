@@ -37,7 +37,7 @@ The game the user called "Feed the Fish" (game 02 of `fifty-games`). This file r
 1. **Feeding a doomed fish kills it at once** (by overfeeding).
 2. **Renaming: both** a text box to type a name (up to **40 characters**) and a button for another random name from the list.
 3. **An open page updates the fish every minute.**
-4. **Reset, with a guilt trip:** a reset button that names how many fish the player is trying to forget before it lets them. It wipes **the stats and the fish**, back to "You have no fish!" (wording below, a draft).
+4. **Reset, with a guilt trip:** a reset button that names how many fish the player is trying to forget before it lets them. It wipes **the stats and the fish**, back to "You have no fish!" (wording below, approved).
 5. **The Tamagotchi picture and the LootLocker leaderboard are settled when we get there**, after the MVP.
 
 ## The rules, worked out from the decisions
@@ -98,7 +98,9 @@ Bubbles, Finnegan, Gill Bates, Captain Wiggles, Sir Swims-a-Lot, Nemo's Cousin, 
 
 You start with no fish. Get a fish. Feed the fish. Not too much: the fish dies if you overfeed it. Not too little: the fish dies if you starve it. Yer fish lives on the real clock, even when you are not looking. If yer fish dies, get a new fish.
 
-### Reset (draft, not yet approved)
+### Reset
+
+**Approved as written, November 8, 2026.**
 
 [N] counts every fish the player has had; the bracketed parts appear only when they apply.
 
